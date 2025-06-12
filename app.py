@@ -87,18 +87,20 @@ def revoked_token_callback(jwt_header, jwt_payload):
 
 
 # ............................................. API_Blueprint .............................................
+from auth.resources import auth
 
+api.register_blueprint(auth)
 # ............................................. End_Of_API_Blueprint .......................................
 
 
 
-@app.route('/')
-def index():
-    return jsonify({
-        "app name" : "Flask Rest API Primary",
-        "developer" : "mosiweb.ir",
-        "year" : "1404"
-        })
+# @app.route('/')
+# def index():
+#     return jsonify({
+#         "app name" : "Flask Rest API Primary",
+#         "developer" : "mosiweb.ir",
+#         "year" : "1404"
+#         })
 
 
 
