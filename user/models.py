@@ -10,16 +10,17 @@ class UserModel(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=True)
-    username = Column(String(100), unique=True, nullable=True)
+    username = Column(String(100), nullable=True)
     phone = Column(String(11), unique=True, nullable=False)
-    email = Column(String(100), unique=True, nullable=True)
+    email = Column(String(100), nullable=True)
     password = Column(String(250), nullable=False)
     role = Column(Integer, nullable=False, default=2)
     avatar = Column(String(100), default='/assets/images/avatar.png')
+    code = Column(String(6), nullable=True)
+    code_expire = Column(DateTime)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now())
-
-
+            
     def __repr__(self):
         return f"{self.name} :: {self.phone}"
     
