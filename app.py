@@ -88,8 +88,11 @@ def revoked_token_callback(jwt_header, jwt_payload):
 
 # ............................................. API_Blueprint .............................................
 from auth.resources import auth
+from user.resources import user
+
 
 api.register_blueprint(auth)
+api.register_blueprint(user)
 # ............................................. End_Of_API_Blueprint .......................................
 
 

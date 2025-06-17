@@ -5,9 +5,12 @@ from flask_smorest import Blueprint, abort
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, get_jwt, jwt_required
 from app import db, limiter
 from user.models import UserModel
-from user.schemas import UserSchema, UserLoginSchema, UserRegisterSchema, UserPhoneSchema, ChangePassSchema
+from .schemas import UserLoginSchema, UserRegisterSchema, UserPhoneSchema, ChangePassSchema
+from user.schemas import UserSchema
 from blocklist import BLOCKLIST
 from datetime import datetime, timedelta
+
+
 
 
 auth = Blueprint("Auth", __name__, url_prefix='/api/auth', description = "Authentication Endpoint")

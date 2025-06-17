@@ -27,7 +27,7 @@ class Config(object):
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=1)
     # ........................ Uploads ..................................................
     UPLOAD_IMAGE = os.getenv('UPLOAD_IMAGE')
-
+    UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
 
 
 class Developement(Config):
