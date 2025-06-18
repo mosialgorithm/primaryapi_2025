@@ -20,6 +20,10 @@ class UserModel(db.Model):
     code_expire = Column(DateTime)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now())
+
+    def __init__(self):
+        if self.username is None:
+            self.username = f'user-{self.phone}'
             
     def __repr__(self):
         return f"{self.name} :: {self.phone}"

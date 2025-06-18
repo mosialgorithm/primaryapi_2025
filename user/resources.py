@@ -9,6 +9,7 @@ from .models import UserModel
 from werkzeug.utils import secure_filename
 from pathlib import Path
 from utils.image import allowed_file, remove_files
+from utils.user import user_is_admin
 
 
 
@@ -31,6 +32,8 @@ class UserInfoView(MethodView):
     @limiter.limit("100/hour")
     @jwt_required()
     def put(self, user_data, user_id):
+        if not user_is_admin():
+            abort(400, message = "You Are Not ADMIN !!")
         user = UserModel.query.get_or_404(user_id)
         if not user:
             abort(400, message="User is not Found !!")
@@ -43,9 +46,8 @@ class UserInfoView(MethodView):
 
     @jwt_required()
     def delete(self, user_id):
-        current_user = UserModel.query.filter_by(id=get_jwt_identity()).one_or_none()
-        if not current_user.is_admin():
-            return abort(400, message = "You Are Not ADMIN !!")
+        if not user_is_admin():
+            abort(400, message = "You Are Not ADMIN !!")
         user_remove = UserModel.query.get_or_404(user_id)
         if not user_remove:
             abort(400, message="User Not Found")
@@ -57,7 +59,10 @@ class UserInfoView(MethodView):
 @user.route("/users-list")
 class UsersListView(MethodView):
     @user.response(200, UserSchema(many=True))
+    @jwt_required()
     def get(self):
+        # if not user_is_admin():
+        #     abort(400, message = "You Are Not ADMIN !!")
         users = UserModel.query.all()
         return users
 
@@ -67,7 +72,6 @@ class UserAvatarView(MethodView):
     @user.arguments(UserAvatarSchema, location="files")
     @jwt_required()
     def post(self, files):
-        print('file upload ?')
         if not files:
             abort(400, message="No Found any File")
         avatar = files['avatar']
@@ -88,3 +92,4 @@ class UserAvatarView(MethodView):
                 abort(400, message=f'error {ex} has been happened')
         else:
             abort(400, message='file is not standard')
+
