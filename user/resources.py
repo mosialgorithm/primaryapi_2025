@@ -8,7 +8,7 @@ from .schemas import UserSchema, UserUpdateSchema, UserAvatarSchema
 from .models import UserModel
 from werkzeug.utils import secure_filename
 from pathlib import Path
-from utils.image import allowed_file, remove_files
+from utils.image import allowed_image, remove_files
 from utils.user import user_is_admin
 
 
@@ -75,7 +75,7 @@ class UserAvatarView(MethodView):
         if not files:
             abort(400, message="No Found any File")
         avatar = files['avatar']
-        if avatar and allowed_file(avatar.filename):
+        if avatar and allowed_image(avatar.filename):
             current_user = UserModel.query.filter_by(id=get_jwt_identity()).one_or_none()
             # ---------------------------------- directory --------------------------------------
             directory = Path(os.path.join(app.config['UPLOAD_IMAGE'], f'{current_user.id}'))

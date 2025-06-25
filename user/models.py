@@ -20,6 +20,7 @@ class UserModel(db.Model):
     code_expire = Column(DateTime)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now())
+    # username = Column(String(100), nullable=False, default=f'user-{uuid.uuid4()[:-12]}')
 
     def __init__(self):
         if self.username is None:
